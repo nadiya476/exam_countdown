@@ -16,6 +16,11 @@
     h1 {
       font-size: 2em;
     }
+    input[type="date"], input[type="text"] {
+      padding: 10px;
+      font-size: 16px;
+      margin: 10px;
+    }
     .countdown {
       font-size: 1.5em;
       margin-top: 10px;
@@ -25,7 +30,7 @@
       font-style: italic;
       color: #0f0;
     }
-    .toggle-btn, .note-btn {
+    .toggle-btn, .add-btn, .note-btn {
       margin-top: 10px;
       padding: 8px 16px;
       border: none;
@@ -38,7 +43,7 @@
       background-color: #fff;
       color: #000;
     }
-    .light .toggle-btn, .light .note-btn {
+    .light .toggle-btn, .light .add-btn, .light .note-btn {
       background-color: #ddd;
       color: #000;
     }
@@ -60,6 +65,12 @@
 
   <h1>📆 Exam Countdown</h1>
 
+  <div id="examSection">
+    <input type="text" id="examTitle" placeholder="Exam name (e.g., O/L)">
+    <input type="date" id="examDate">
+    <button class="add-btn" onclick="addCountdown()">➕ Add Countdown</button>
+  </div>
+
   <div id="countdownList">
     <div class="countdown" data-title="O/L" data-date="2025-12-02"></div>
     <div class="countdown" data-title="A/L" data-date="2025-08-05"></div>
@@ -69,7 +80,7 @@
 
   <button class="toggle-btn" onclick="toggleMode()">🌗 Toggle Mode</button>
   <button class="note-btn" onclick="toggleNote()">📝 Notes</button>
-  <button class="note-btn" onclick="toggleMotivation()">🎧 Play / Pause Motivation</button>
+  <button class="note-btn" onclick="playMotivation()">🎧 Play Motivation</button>
 
   <div class="note-box" id="noteBox" style="display:none;">
     <textarea id="noteArea" rows="4" cols="40" placeholder="Write your study note or reminder here..."></textarea>
@@ -89,23 +100,20 @@
       box.style.display = box.style.display === "none" ? "block" : "none";
     }
 
-    
-    let isPlaying = false;
-    function toggleMotivation() {
-      const audio = document.getElementById("motivationAudio");
-      if (isPlaying) {
-        audio.pause();
-      } else {
-        audio.play();
-      }
-      isPlaying = !isPlaying;
-    }
-    function playMotivation() { // not used but kept for compatibility
+    function playMotivation() {
       document.getElementById("motivationAudio").play();
-      isPlaying = true;
     }
 
-      document.getElementById("motivationAudio").play();
+    function addCountdown() {
+      const title = document.getElementById("examTitle").value;
+      const date = document.getElementById("examDate").value;
+      if (!title || !date) return alert("Please fill in both exam name and date.");
+
+      const countdownEl = document.createElement("div");
+      countdownEl.className = "countdown";
+      countdownEl.dataset.date = date;
+      countdownEl.dataset.title = title;
+      document.getElementById("countdownList").appendChild(countdownEl);
     }
 
     function updateCountdowns() {
@@ -125,7 +133,7 @@
         const minutes = Math.floor((diff / (1000 * 60)) % 60);
         const seconds = Math.floor((diff / 1000) % 60);
 
-        el.textContent = `📚 ${el.dataset.title}: ${days}d ${hours}h ${minutes}m ${seconds}s`;
+        el.textContent = `📚 ${el.dataset.title}: ${days}d ${hours}h ${minutes}m ${seconds}s`;Add commentMore actions
       }
     }
 
@@ -134,4 +142,3 @@
 
 </body>
 </html>
-
