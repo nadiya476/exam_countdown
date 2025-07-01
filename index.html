@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>📆 Exam Countdown</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      text-align: center;
+      margin: 0;
+      padding: 20px;
+      background-color: #111;
+      color: #fff;
+      transition: 0.3s;
+    }
+    h1 {
+      font-size: 2em;
+    }
+    input[type="date"], input[type="text"] {
+      padding: 10px;
+      font-size: 16px;
+      margin: 10px;
+    }
+    .countdown {
+      font-size: 1.5em;
+      margin-top: 10px;
+    }
+    .motivation {
+      margin-top: 20px;
+      font-style: italic;
+      color: #0f0;
+    }
+    .toggle-btn, .add-btn, .note-btn {
+      margin-top: 10px;
+      padding: 8px 16px;
+      border: none;
+      border-radius: 6px;
+      background-color: #444;
+      color: white;
+      cursor: pointer;
+    }
+    .light {
+      background-color: #fff;
+      color: #000;
+    }
+    .light .toggle-btn, .light .add-btn, .light .note-btn {
+      background-color: #ddd;
+      color: #000;
+    }
+    footer {
+      margin-top: 20px;
+      font-size: 14px;
+      color: #aaa;
+    }
+    .note-box {
+      margin-top: 10px;
+      padding: 10px;
+      border: 1px solid #555;
+      border-radius: 6px;
+      background-color: rgba(255,255,255,0.1);
+    }
+  </style>
+</head>
+<body class="dark">
+
+  <h1>📆 Exam Countdown</h1>
+
+  <div id="examSection">
+    <input type="text" id="examTitle" placeholder="Exam name (e.g., O/L)">
+    <input type="date" id="examDate">
+    <button class="add-btn" onclick="addCountdown()">➕ Add Countdown</button>
+  </div>
+
+  <div id="countdownList">
+    <div class="countdown" data-title="O/L" data-date="2025-12-02"></div>
+    <div class="countdown" data-title="A/L" data-date="2025-08-05"></div>
+  </div>
+
+  <div class="motivation">"Believe in yourself. You are capable of amazing things!"</div>
+
+  <button class="toggle-btn" onclick="toggleMode()">🌗 Toggle Mode</button>
+  <button class="note-btn" onclick="toggleNote()">📝 Notes</button>
+  <button class="note-btn" onclick="playMotivation()">🎧 Play Motivation</button>
+
+  <div class="note-box" id="noteBox" style="display:none;">
+    <textarea id="noteArea" rows="4" cols="40" placeholder="Write your study note or reminder here..."></textarea>
+  </div>
+
+  <audio id="motivationAudio" src="motivation.mp3"></audio>
+
+  <footer>🚀 Made by Nadiya</footer>
+
+  <script>
+    function toggleMode() {
+      document.body.classList.toggle("light");
+    }
+
+    function toggleNote() {
+      const box = document.getElementById("noteBox");
+      box.style.display = box.style.display === "none" ? "block" : "none";
+    }
+
+    function playMotivation() {
+      document.getElementById("motivationAudio").play();
+    }
+
+    function addCountdown() {
+      const title = document.getElementById("examTitle").value;
+      const date = document.getElementById("examDate").value;
+      if (!title || !date) return alert("Please fill in both exam name and date.");
+
+      const countdownEl = document.createElement("div");
+      countdownEl.className = "countdown";
+      countdownEl.dataset.date = date;
+      countdownEl.dataset.title = title;
+      document.getElementById("countdownList").appendChild(countdownEl);
+    }
+
+    function updateCountdowns() {
+      const list = document.getElementById("countdownList").children;
+      for (let el of list) {
+        const examDate = new Date(el.dataset.date + "T00:00:00");
+        const now = new Date();
+        const diff = examDate - now;
+
+        if (diff <= 0) {
+          el.textContent = `🎉 ${el.dataset.title} is Today!`;
+          continue;
+        }
+
+        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+        const minutes = Math.floor((diff / (1000 * 60)) % 60);
+        const seconds = Math.floor((diff / 1000) % 60);
+
+        el.textContent = `📚 ${el.dataset.title}: ${days}d ${hours}h ${minutes}m ${seconds}s`;
+      }
+    }
+
+    setInterval(updateCountdowns, 1000);
+  </script>
+
+</body>
+</html>
