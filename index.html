@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>📆 Exam Countdown</title>
+  <title>ðŸ“† Exam Countdown</title>
   <style>
     body {
       font-family: sans-serif;
@@ -63,12 +63,12 @@
 </head>
 <body class="dark">
 
-  <h1>📆 Exam Countdown</h1>
+  <h1>ðŸ“† Exam Countdown</h1>
 
   <div id="examSection">
     <input type="text" id="examTitle" placeholder="Exam name (e.g., O/L)">
     <input type="date" id="examDate">
-    <button class="add-btn" onclick="addCountdown()">➕ Add Countdown</button>
+    <button class="add-btn" onclick="addCountdown()">âž• Add Countdown</button>
   </div>
 
   <div id="countdownList">
@@ -78,9 +78,9 @@
 
   <div class="motivation">"Believe in yourself. You are capable of amazing things!"</div>
 
-  <button class="toggle-btn" onclick="toggleMode()">🌗 Toggle Mode</button>
-  <button class="note-btn" onclick="toggleNote()">📝 Notes</button>
-  <button class="note-btn" onclick="playMotivation()">🎧 Play Motivation</button>
+  <button class="toggle-btn" onclick="toggleMode()">ðŸŒ— Toggle Mode</button>
+  <button class="note-btn" onclick="toggleNote()">ðŸ“ Notes</button>
+  <button class="note-btn" onclick="playMotivation()">ðŸŽ§ Play Motivation</button>
 
   <div class="note-box" id="noteBox" style="display:none;">
     <textarea id="noteArea" rows="4" cols="40" placeholder="Write your study note or reminder here..."></textarea>
@@ -88,7 +88,7 @@
 
   <audio id="motivationAudio" src="motivation.mp3"></audio>
 
-  <footer>🚀 Made by Nadiya</footer>
+  <footer>ðŸš€ Made by Nadiya</footer>
 
   <script>
     function toggleMode() {
@@ -124,7 +124,7 @@
         const diff = examDate - now;
 
         if (diff <= 0) {
-          el.textContent = `🎉 ${el.dataset.title} is Today!`;
+          el.textContent = `ðŸŽ‰ ${el.dataset.title} is Today!`;
           continue;
         }
 
@@ -133,7 +133,7 @@
         const minutes = Math.floor((diff / (1000 * 60)) % 60);
         const seconds = Math.floor((diff / 1000) % 60);
 
-        el.textContent = `📚 ${el.dataset.title}: ${days}d ${hours}h ${minutes}m ${seconds}s`;Add commentMore actions
+        el.textContent = `ðŸ“š ${el.dataset.title}: ${days}d ${hours}h ${minutes}m ${seconds}s`;
       }
     }
 
@@ -142,3 +142,4 @@
 
 </body>
 </html>
+
